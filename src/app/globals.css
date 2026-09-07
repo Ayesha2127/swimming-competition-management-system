@@ -1,0 +1,385 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Karachi Club Swimming - Premium Design System
+   Primary colors: Navy Blue, White, Mint/Emerald Green
+------------------------------------------------------------------ */
+
+@theme {
+  --color-kc-blue-50: #eef6fd;
+  --color-kc-blue-100: #d8ecfb;
+  --color-kc-blue-200: #b4d9f6;
+  --color-kc-blue-300: #83c0ef;
+  --color-kc-blue-400: #4b9fe5;
+  --color-kc-blue-500: #227fd4;
+  --color-kc-blue-600: #1563b4;
+  --color-kc-blue-700: #134f92;
+  --color-kc-blue-800: #144379;
+  --color-kc-blue-900: #163a65;
+  --color-kc-blue-950: #0e2544;
+
+  --color-kc-green-50: #ecfdf5;
+  --color-kc-green-100: #d1fae5;
+  --color-kc-green-200: #a7f3d0;
+  --color-kc-green-300: #6ee7b7;
+  --color-kc-green-400: #34d399;
+  --color-kc-green-500: #10b981;
+  --color-kc-green-600: #059669;
+  --color-kc-green-700: #047857;
+  --color-kc-green-800: #065f46;
+  --color-kc-green-900: #064e3b;
+
+  --color-kc-mint-50: #f0fdfa;
+  --color-kc-mint-100: #ccfbf1;
+  --color-kc-mint-200: #99f6e4;
+  --color-kc-mint-300: #5eead4;
+  --color-kc-mint-400: #2dd4bf;
+  --color-kc-mint-500: #14b8a6;
+  --color-kc-mint-600: #0d9488;
+  --color-kc-mint-700: #0f766e;
+  --color-kc-mint-800: #115e59;
+  --color-kc-mint-900: #134e4a;
+
+  --color-kc-navy: #0e2544;
+  --color-kc-ink: #0b1b30;
+
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+
+  --animate-wave: wave 12s linear infinite;
+  --animate-ripple: ripple 2.4s ease-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-in-up: fadeInUp 0.6s ease-out both;
+  --animate-shimmer: shimmer 2s linear infinite;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #0b1b30;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+
+  ::selection {
+    background: var(--color-kc-green-400);
+    color: var(--color-kc-blue-950);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Wave / ripple animations
+------------------------------------------------------------------ */
+
+@keyframes wave {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Logo preloader water animations */
+.preloader-ripple-ring {
+  animation: preloaderRipple 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+.preloader-ripple-ring-2 { animation-delay: 0.6s; }
+.preloader-ripple-ring-3 { animation-delay: 1.2s; }
+
+@keyframes preloaderRipple {
+  0% { transform: scale(0.8); opacity: 0.7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.preloader-glow {
+  animation: preloaderGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes preloaderGlow {
+  0% { opacity: 0.3; transform: scale(1); }
+  100% { opacity: 0.6; transform: scale(1.1); }
+}
+
+.preloader-logo-pulse {
+  animation: preloaderPulse 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes preloaderPulse {
+  0% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.15), 0 0 60px rgba(16, 185, 129, 0.05); }
+  100% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.25), 0 0 80px rgba(16, 185, 129, 0.1); }
+}
+
+.preloader-water-surface {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(16, 185, 129, 0.03) 30%,
+    rgba(45, 212, 191, 0.06) 50%,
+    rgba(16, 185, 129, 0.03) 70%,
+    transparent 100%
+  );
+  animation: waterSurface 3s ease-in-out infinite;
+}
+
+@keyframes waterSurface {
+  0%, 100% { transform: translateY(-100%); }
+  50% { transform: translateY(100%); }
+}
+
+.preloader-light-line {
+  animation: lightRefract 2.8s ease-in-out infinite;
+}
+
+@keyframes lightRefract {
+  0%, 100% { transform: translateY(-40px) rotate(-2deg); opacity: 0; }
+  20% { opacity: 0.6; }
+  50% { transform: translateY(40px) rotate(2deg); opacity: 0.3; }
+  80% { opacity: 0.6; }
+}
+
+.preloader-wave-1 { animation: waveSlide 8s linear infinite; }
+.preloader-wave-2 { animation: waveSlide 11s linear infinite reverse; }
+.preloader-wave-3 { animation: waveSlide 6s linear infinite; }
+
+@keyframes waveSlide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.preloader-particle {
+  animation: particleFloat 4s ease-in-out infinite;
+}
+.preloader-particle-1 { animation-delay: 0s; animation-duration: 5s; }
+.preloader-particle-2 { animation-delay: 0.8s; animation-duration: 4.5s; }
+.preloader-particle-3 { animation-delay: 1.6s; animation-duration: 6s; }
+.preloader-particle-4 { animation-delay: 2.4s; animation-duration: 3.5s; }
+.preloader-particle-5 { animation-delay: 0.4s; animation-duration: 5.5s; }
+
+@keyframes particleFloat {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.2; }
+  25% { transform: translateY(-20px) translateX(8px); opacity: 0.5; }
+  50% { transform: translateY(-8px) translateX(-5px); opacity: 0.3; }
+  75% { transform: translateY(-25px) translateX(3px); opacity: 0.6; }
+}
+
+.preloader-drop {
+  animation: dropBounce 1.4s ease-in-out infinite;
+}
+.preloader-drop-1 { animation-delay: 0s; }
+.preloader-drop-2 { animation-delay: 0.2s; }
+.preloader-drop-3 { animation-delay: 0.4s; }
+
+@keyframes dropBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.3; }
+  40% { transform: scale(1.2); opacity: 1; }
+}
+
+.wave-front {
+  animation: wave 14s linear infinite;
+}
+
+.wave-back {
+  animation: wave 20s linear infinite reverse;
+  opacity: 0.6;
+}
+
+/* ------------------------------------------------------------------
+   Accessibility: reduced motion
+------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Shared component styles — Premium
+------------------------------------------------------------------ */
+
+.kc-container {
+  margin-inline: auto;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .kc-container {
+    padding-inline: 2rem;
+  }
+}
+
+.kc-btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+.kc-btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60 bg-kc-blue-600 text-white shadow-lg shadow-kc-blue-600/20 hover:bg-kc-blue-700 hover:shadow-xl hover:shadow-kc-blue-600/30 hover:-translate-y-0.5 active:translate-y-0;
+}
+
+.kc-btn-green {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60 bg-kc-green-500 text-white shadow-lg shadow-kc-green-500/20 hover:bg-kc-green-600 hover:shadow-xl hover:shadow-kc-green-500/30 hover:-translate-y-0.5 active:translate-y-0;
+}
+
+.kc-btn-mint {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60 bg-kc-mint-500 text-white shadow-lg shadow-kc-mint-500/20 hover:bg-kc-mint-600 hover:shadow-xl hover:shadow-kc-mint-500/30 hover:-translate-y-0.5 active:translate-y-0;
+}
+
+.kc-btn-outline {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60 border border-kc-blue-200 text-kc-blue-800 hover:border-kc-blue-400 hover:bg-kc-blue-50 hover:shadow-md;
+}
+
+.kc-btn-outline-light {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60 border border-white/30 text-white hover:bg-white/10 hover:border-white/50 hover:shadow-lg hover:shadow-white/5;
+}
+
+.kc-btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60 text-kc-blue-700 hover:bg-kc-blue-50;
+}
+
+.kc-card {
+  @apply rounded-2xl border border-slate-200/80 bg-white shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-slate-200/50;
+}
+
+.kc-input {
+  @apply w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-kc-green-400 focus:bg-white focus:ring-2 focus:ring-kc-green-400/20 focus:outline-none transition-all duration-200;
+}
+
+.kc-label {
+  @apply mb-1.5 block text-sm font-semibold text-slate-700;
+}
+
+.kc-badge {
+  @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+}
+
+.badge-green { @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold bg-kc-green-50 text-kc-green-700 ring-1 ring-kc-green-200; }
+.badge-mint { @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold bg-kc-mint-50 text-kc-mint-700 ring-1 ring-kc-mint-200; }
+.badge-blue { @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold bg-kc-blue-50 text-kc-blue-700 ring-1 ring-kc-blue-200; }
+.badge-slate { @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold bg-slate-100 text-slate-600 ring-1 ring-slate-200; }
+.badge-red { @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold bg-red-50 text-red-600 ring-1 ring-red-200; }
+.badge-bronze { @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold bg-orange-100 text-orange-700 ring-1 ring-orange-300; }
+
+.kc-table {
+  @apply w-full text-left text-sm;
+}
+
+.kc-table th {
+  @apply sticky top-0 bg-slate-50/80 backdrop-blur-sm px-4 py-3 text-xs font-bold tracking-wide text-slate-500 uppercase border-b border-slate-200;
+}
+
+.kc-table td {
+  @apply border-t border-slate-100 px-4 py-3.5 align-middle;
+}
+
+.kc-table tbody tr {
+  @apply transition-colors hover:bg-kc-green-50/30;
+}
+
+/* Premium gradient backgrounds */
+.kc-bg-hero-gradient {
+  background:
+    radial-gradient(1200px 500px at 15% -10%, rgba(16, 185, 129, 0.08), transparent 55%),
+    radial-gradient(800px 400px at 85% 20%, rgba(45, 212, 191, 0.06), transparent 50%),
+    linear-gradient(160deg, var(--color-kc-blue-950) 0%, var(--color-kc-blue-900) 40%, var(--color-kc-blue-800) 100%);
+}
+
+.kc-bg-water-gradient {
+  background: linear-gradient(180deg, var(--color-kc-blue-50) 0%, #ffffff 40%, rgba(236, 253, 245, 0.3) 100%);
+}
+
+.kc-bg-deep {
+  background:
+    radial-gradient(900px 380px at 80% -10%, rgba(16, 185, 129, 0.12), transparent 55%),
+    radial-gradient(600px 300px at 20% 80%, rgba(45, 212, 191, 0.08), transparent 50%),
+    linear-gradient(165deg, var(--color-kc-blue-950) 0%, var(--color-kc-blue-900) 55%, #0c2d4a 100%);
+}
+
+.kc-bg-premium {
+  background:
+    radial-gradient(1000px 450px at 30% -5%, rgba(16, 185, 129, 0.1), transparent 50%),
+    radial-gradient(700px 350px at 70% 90%, rgba(45, 212, 191, 0.07), transparent 50%),
+    linear-gradient(170deg, #fafbfc 0%, #f8fafb 50%, #f5f9fa 100%);
+}
+
+.text-shadow-hero {
+  text-shadow: 0 2px 24px rgba(6, 22, 46, 0.55), 0 1px 3px rgba(6, 22, 46, 0.4);
+}
+
+/* Premium glass morphism */
+.kc-glass {
+  @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-lg;
+}
+
+.kc-glass-dark {
+  @apply bg-kc-blue-950/60 backdrop-blur-xl border border-white/10 shadow-lg;
+}
+
+/* Swim gallery infinite marquee */
+.swim-marquee {
+  animation: swimScroll 30s linear infinite;
+}
+
+.swim-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes swimScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
