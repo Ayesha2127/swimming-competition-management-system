@@ -30,10 +30,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Please log in to register." }, { status: 401 });
   }
 
-  if (session.user.role === UserRole.COMMITTEE) {
-    return NextResponse.json({ error: "Committee accounts cannot register via the public form." }, { status: 403 });
-  }
-
   let body: unknown;
   try {
     body = await req.json();

@@ -59,14 +59,14 @@ async function HeroVideo() {
             <Waves className="h-4 w-4" />
             Karachi Club · Est. Swimming Section
           </p>
-          <h1 className="font-display text-4xl font-extrabold uppercase leading-[0.95] text-white sm:text-5xl md:text-7xl" style={{ textShadow: "0 0 15px rgba(14, 37, 68, 1), 0 0 40px rgba(14, 37, 68, 0.85), 0 0 80px rgba(14, 37, 68, 0.5), 4px 4px 0 rgba(14, 37, 68, 1), -3px -3px 0 rgba(14, 37, 68, 1), 3px -3px 0 rgba(14, 37, 68, 1), -3px 3px 0 rgba(14, 37, 68, 1)" }}>
+          <h1 className="font-display text-4xl font-extrabold uppercase leading-[0.95] text-white sm:text-5xl md:text-7xl" style={{ textShadow: "0 0 10px rgba(14, 37, 68, 0.5), 0 0 25px rgba(14, 37, 68, 0.3), 2px 2px 0 rgba(14, 37, 68, 0.4), -1px -1px 0 rgba(14, 37, 68, 0.35), 2px -1px 0 rgba(14, 37, 68, 0.35), -1px 2px 0 rgba(14, 37, 68, 0.35)" }}>
             Swim Fast
             <br />
             <span className="text-kc-green-400" style={{ textShadow: "0 0 20px rgba(14, 37, 68, 0.5), 0 0 50px rgba(14, 37, 68, 0.3), 2px 2px 0 rgba(14, 37, 68, 0.5), -1px -1px 0 rgba(14, 37, 68, 0.4), 2px -1px 0 rgba(14, 37, 68, 0.4), -1px 2px 0 rgba(14, 37, 68, 0.4)" }}>Race Bold</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">
             Where every stroke counts and every champion is made. Dive into Karachi Club's
-            premier swimming competitions — your journey from the starting block to the
+            premier swimming competitions. Your journey from the starting block to the
             podium begins here.
           </p>
 
@@ -75,7 +75,7 @@ async function HeroVideo() {
               Register for a Competition
               <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/events" className="!border-2 !border-kc-blue-600 !text-kc-blue-300 hover:!bg-kc-blue-600/15 hover:!border-kc-blue-500 hover:!shadow-kc-blue-600/10 hover:!shadow-xl inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-base font-semibold transition-all duration-300">
+            <Link href="/events" className="!border-2 !border-kc-green-400/60 !text-kc-green-300 hover:!bg-kc-green-500/15 hover:!border-kc-green-400 hover:!shadow-kc-green-400/10 hover:!shadow-xl inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-base font-semibold transition-all duration-300">
               Explore Events
             </Link>
           </div>
@@ -90,7 +90,7 @@ async function HeroVideo() {
           ].map((stat) => (
             <div
               key={stat.label}
-              className="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/5 px-2 py-4 text-center backdrop-blur-md sm:px-4 sm:py-5 md:rounded-2xl"
+              className="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/5 px-2 py-4 text-center backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:scale-105 hover:border-white/20 sm:px-4 sm:py-5 md:rounded-2xl"
             >
               <stat.icon className="mb-1 h-5 w-5 text-kc-green-300 md:h-6 md:w-6" />
               <p className="font-display text-sm font-bold text-white md:text-lg">{stat.value}</p>
@@ -156,7 +156,7 @@ async function HowItWorks() {
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
-            <div key={step.title} className="kc-card group relative overflow-hidden border-kc-blue-200 p-6 hover:border-kc-blue-400">
+            <div key={step.title} className="kc-card group relative overflow-hidden border-kc-blue-200 p-6 transition-all duration-300 hover:border-kc-blue-400 hover:shadow-kc-blue-200/30">
               <span className="absolute -right-3 -top-4 font-display text-7xl font-extrabold text-kc-blue-100 select-none">
                 {i + 1}
               </span>
@@ -217,7 +217,7 @@ async function UpcomingCompetitions() {
               <Link
                 key={competition.id}
                 href={`/competitions/${competition.slug}`}
-                className="kc-card group overflow-hidden !border-kc-blue-600 p-6 hover:-translate-y-1 hover:!border-kc-blue-400"
+                className="kc-card group overflow-hidden !border-kc-blue-600 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-kc-blue-200/30 hover:!border-kc-blue-400"
               >
                 <div className="flex items-center justify-between">
                   <span className={cn(open ? "badge-green" : "badge-blue")}>

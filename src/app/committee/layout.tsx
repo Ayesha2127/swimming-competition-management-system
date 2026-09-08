@@ -9,11 +9,18 @@ export default async function CommitteeLayout({
 }) {
   const session = await requireCommittee();
 
-  const [competitionCount, registrationCount, participantCount] = await Promise.all([
+  const [competitionCount, registrationCount, participantCount, myChildrenLinks] = await Promise.all([
     prisma.competition.count({ where: { status: { not: "ARCHIVED" } } }),
     prisma.registration.count(),
     prisma.participant.count(),
+    prisma.parentChild.findMany({
+      where: { parentUserId: session.user.id },
+      include: { participant: { select: { id: true, fullName: true } } },
+      orderBy: { createdAt: "asc" },
+    }),
   ]);
+
+  const myChildren = myChildrenLinks.map((link) => ({ id: link.participant.id, fullName: link.participant.fullName }));
 
   return (
     <CommitteeShell
@@ -22,6 +29,7 @@ export default async function CommitteeLayout({
       competitionCount={competitionCount}
       registrationCount={registrationCount}
       participantCount={participantCount}
+      myChildren={myChildren}
     >
       {children}
     </CommitteeShell>

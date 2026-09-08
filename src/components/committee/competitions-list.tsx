@@ -14,6 +14,7 @@ import {
   CalendarDays,
   MapPin,
   Users,
+  Trash2,
 } from "lucide-react";
 import { cn, formatDate } from "@/lib/utils";
 
@@ -193,6 +194,14 @@ export function CompetitionsList({ initial }: { initial: CompetitionRow[] }) {
                 >
                   View
                 </Link>
+                <button
+                  type="button"
+                  disabled={busyId === row.id}
+                  onClick={() => remove(row)}
+                  className="ml-auto text-red-400 hover:text-red-600 hover:underline disabled:opacity-40"
+                >
+                  <Trash2 className="mr-1 inline h-3.5 w-3.5" />Delete
+                </button>
               </div>
             </div>
           ))}

@@ -19,6 +19,7 @@ import {
   ArrowLeft,
   ScrollText,
   Waves,
+  Users,
 } from "lucide-react";
 import { RegistrationForm } from "@/components/registration-form";
 
@@ -67,8 +68,27 @@ export default async function CompetitionPage({
   if (session?.user?.id) {
     const userId = session.user.id;
     if (session.user.role === UserRole.COMMITTEE) {
-      // Committee normally uses the dashboard, but allow them to view too
-      participants = [];
+      // Committee members: load their children from ParentChild
+      const childrenRows = await prisma.parentChild.findMany({
+        where: { parentUserId: userId },
+        include: { participant: { include: { ageGroup: true } } },
+      });
+
+      participants = childrenRows.map((row) => row.participant).map((p) => ({
+        id: p.id,
+        fullName: p.fullName,
+        ageGroupId: p.ageGroupId,
+        ageGroupName: p.ageGroup?.name ?? null,
+        createdAt: p.createdAt.toISOString(),
+      }));
+
+      if (participants.length > 0) {
+        const regs = await prisma.registration.findMany({
+          where: { competitionId: competition.id, participantId: { in: participants.map((p) => p.id) } },
+          include: { participant: true, ageGroup: true, events: { include: { competitionEvent: { include: { event: true } } } } },
+        });
+        registeredParticipantIds = regs.map((r) => r.participantId);
+      }
     } else {
       const own = await prisma.participant.findUnique({
         where: { userId },
@@ -382,14 +402,52 @@ export default async function CompetitionPage({
                 </div>
               )}
 
-              {session?.user?.id && session.user.role === UserRole.COMMITTEE && (
-                <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center">
-                  <p className="text-sm text-slate-600">
-                    You are signed in as a committee member.{" "}
-                    <Link href="/committee" className="font-bold text-kc-blue-600 underline">
-                      Go to the committee dashboard
-                    </Link>{" "}
-                    to manage this competition.
+              {session?.user?.id && session.user.role === UserRole.COMMITTEE && open && (
+                <div className="space-y-4">
+                  {registeredParticipantIds.length > 0 && (
+                    <div className="rounded-2xl border border-kc-green-200 bg-kc-green-50 p-6">
+                      <ClipboardCheck className="mb-2 h-9 w-9 text-kc-green-600" />
+                      <h2 className="font-display text-lg font-bold uppercase text-kc-green-700">
+                        {registeredParticipantIds.length === 1
+                          ? "Your child is already registered for this competition."
+                          : "Some of your children are already registered."}
+                      </h2>
+                      <p className="mt-2 text-sm text-slate-600">
+                        Duplicate registrations are not allowed. You can manage registrations from the committee dashboard.
+                      </p>
+                      <Link href="/committee/registrations" className="kc-btn-green mt-4">
+                        View registrations
+                      </Link>
+                    </div>
+                  )}
+
+                  {participants.length === 0 ? (
+                    <div className="rounded-2xl border border-kc-blue-200 bg-kc-blue-50 p-8 text-center">
+                      <Users className="mx-auto mb-3 h-12 w-12 text-kc-blue-500" />
+                      <h3 className="font-display text-xl font-bold uppercase text-kc-blue-800">
+                        Add your children first
+                      </h3>
+                      <p className="mx-auto mt-2 max-w-md text-sm text-slate-600">
+                        You need to add your children profiles before you can register them for competitions.
+                      </p>
+                      <Link href="/committee/my-children/new" className="kc-btn-primary mt-5">
+                        Add a child
+                      </Link>
+                    </div>
+                  ) : registrationData.participants.length > 0 || registeredParticipantIds.length === 0 ? (
+                    <RegistrationForm data={registrationData} />
+                  ) : null}
+                </div>
+              )}
+
+              {session?.user?.id && session.user.role === UserRole.COMMITTEE && !open && (
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-center">
+                  <ClipboardCheck className="mx-auto mb-2 h-9 w-9 text-slate-400" />
+                  <h2 className="font-display text-xl font-bold uppercase text-slate-600">
+                    Registration is closed
+                  </h2>
+                  <p className="mt-2 text-sm text-slate-500">
+                    This competition is {competition.status === "ARCHIVED" ? "completed" : "not currently accepting registrations"}.
                   </p>
                 </div>
               )}

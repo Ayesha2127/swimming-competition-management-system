@@ -20,6 +20,7 @@ import {
   X,
   Home,
   ShieldCheck,
+  Baby,
 } from "lucide-react";
 import { logoPath } from "@/lib/config";
 import { cn } from "@/lib/utils";
@@ -31,6 +32,7 @@ interface CommitteeShellProps {
   registrationCount: number;
   participantCount: number;
   children: React.ReactNode;
+  myChildren: { id: string; fullName: string }[];
 }
 
 export function CommitteeShell({
@@ -40,12 +42,14 @@ export function CommitteeShell({
   registrationCount,
   participantCount,
   children,
+  myChildren,
 }: CommitteeShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
 
   const navItems = [
     { href: "/committee", label: "Dashboard", icon: LayoutDashboard, exact: true },
+    { href: "/committee/my-children", label: myChildren.length > 0 ? myChildren[0].fullName : "My Children", icon: Baby },
     { href: "/committee/participants", label: "Participants", icon: Users },
     { href: "/committee/registrations", label: "Registrations", icon: ClipboardList },
     { href: "/committee/competitions", label: "Competitions", icon: Trophy },
@@ -86,20 +90,41 @@ export function CommitteeShell({
         {navItems.map((item) => {
           const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
           return (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setSidebarOpen(false)}
-              className={cn(
-                "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200",
-                active
-                  ? "bg-kc-green-600 text-white shadow-lg shadow-kc-green-600/20"
-                  : "text-kc-blue-200 hover:bg-white/10 hover:text-white",
+            <div key={item.href}>
+              <Link
+                href={item.href}
+                onClick={() => setSidebarOpen(false)}
+                className={cn(
+                  "flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200",
+                  active
+                    ? "bg-kc-green-600 text-white shadow-lg shadow-kc-green-600/20"
+                    : "text-kc-blue-200 hover:bg-white/10 hover:text-white",
+                )}
+              >
+                <item.icon className="h-5 w-5" />
+                <span>{item.label}</span>
+              </Link>
+              {/* Show child sub-items under My Children */}
+              {item.href === "/committee/my-children" && myChildren.length > 0 && (
+                <div className="ml-4 mt-1 space-y-0.5 border-l border-white/10 pl-3">
+                  {myChildren.map((child) => (
+                    <Link
+                      key={child.id}
+                      href={`/committee/my-children/${child.id}`}
+                      onClick={() => setSidebarOpen(false)}
+                      className={cn(
+                        "flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200",
+                        pathname === `/committee/my-children/${child.id}`
+                          ? "bg-kc-green-600/30 text-kc-green-300"
+                          : "text-kc-blue-300 hover:bg-white/5 hover:text-white",
+                      )}
+                    >
+                      {child.fullName}
+                    </Link>
+                  ))}
+                </div>
               )}
-            >
-              <item.icon className="h-5 w-5" />
-              <span>{item.label}</span>
-            </Link>
+            </div>
           );
         })}
       </nav>

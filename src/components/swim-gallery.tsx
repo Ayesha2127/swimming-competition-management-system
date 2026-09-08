@@ -31,7 +31,7 @@ export function SwimGallery() {
           {doubled.map((img, i) => (
             <div
               key={`${img.src}-${i}`}
-              className="relative h-44 w-64 shrink-0 overflow-hidden rounded-2xl bg-kc-blue-100 sm:h-56 sm:w-80 md:h-72 md:w-96"
+              className="relative h-44 w-64 shrink-0 overflow-hidden rounded-2xl bg-kc-blue-100 transition-transform duration-500 hover:scale-105 sm:h-56 sm:w-80 md:h-72 md:w-96"
             >
               <Image
                 src={img.src}
