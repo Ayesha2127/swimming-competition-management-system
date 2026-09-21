@@ -64,6 +64,7 @@ export default async function CompetitionPage({
     createdAt: string;
   }[] = [];
   let registeredParticipantIds: string[] = [];
+  let registeredParticipantNames: string[] = [];
 
   if (session?.user?.id) {
     const userId = session.user.id;
@@ -88,6 +89,7 @@ export default async function CompetitionPage({
           include: { participant: true, ageGroup: true, events: { include: { competitionEvent: { include: { event: true } } } } },
         });
         registeredParticipantIds = regs.map((r) => r.participantId);
+        registeredParticipantNames = regs.map((r) => r.participant.fullName);
       }
     } else {
       const own = await prisma.participant.findUnique({
@@ -145,6 +147,7 @@ export default async function CompetitionPage({
     })),
     ageGroups: ageGroups.map((ag) => ({ id: ag.id, name: ag.name })),
     registeredParticipantIds,
+    registeredParticipantNames,
   };
 
   // Public results for this competition (individuals + relays)
@@ -409,11 +412,12 @@ export default async function CompetitionPage({
                       <ClipboardCheck className="mb-2 h-9 w-9 text-kc-green-600" />
                       <h2 className="font-display text-lg font-bold uppercase text-kc-green-700">
                         {registeredParticipantIds.length === 1
-                          ? "Your child is already registered for this competition."
-                          : "Some of your children are already registered."}
+                          ? `${registeredParticipantNames[0]} is already registered for this competition.`
+                          : `${registeredParticipantNames.join(", ")} are already registered.`}
                       </h2>
                       <p className="mt-2 text-sm text-slate-600">
-                        Duplicate registrations are not allowed. You can manage registrations from the committee dashboard.
+                        This child may have been registered through another account (e.g. a parent account). 
+                        Each participant can only be registered once per competition. You can view existing registrations from the dashboard.
                       </p>
                       <Link href="/committee/registrations" className="kc-btn-green mt-4">
                         View registrations
@@ -463,8 +467,8 @@ export default async function CompetitionPage({
                           : "Some swimmers on your account are already registered."}
                       </h2>
                       <p className="mt-2 text-sm text-slate-600">
-                        Duplicate registrations are not allowed. Already-registered swimmers can still
-                        view their registration details in the dashboard.
+                        Duplicate registrations are not allowed. Each participant can only register once per competition. 
+                        Already-registered swimmers can still view their registration details in the dashboard.
                       </p>
                       <Link href="/dashboard" className="kc-btn-green mt-4">
                         View my registration

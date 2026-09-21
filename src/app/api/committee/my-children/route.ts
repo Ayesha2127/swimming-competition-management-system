@@ -66,7 +66,7 @@ export async function POST(req: Request) {
   // Check unique membership number
   const existing = await prisma.participant.findUnique({ where: { kcMembershipNumber } });
   if (existing) {
-    return NextResponse.json({ error: "A participant with this KC membership number already exists." }, { status: 409 });
+    return NextResponse.json({ error: `A participant named "${existing.fullName}" already has this KC membership number. If this is a different child, please use a different KC number.` }, { status: 409 });
   }
 
   const participant = await prisma.participant.create({

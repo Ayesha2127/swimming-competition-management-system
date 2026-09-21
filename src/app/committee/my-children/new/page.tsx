@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, ArrowLeft, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import { DateOfBirthPicker } from "@/components/profile/date-of-birth-picker";
 
 export default function AddChildPage() {
   const router = useRouter();
@@ -100,7 +101,11 @@ export default function AddChildPage() {
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="dob" className="kc-label">Date of Birth *</label>
-              <input id="dob" type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} className="kc-input" required />
+              <DateOfBirthPicker
+                value={dateOfBirth}
+                onChange={setDateOfBirth}
+                maxDate={new Date().toISOString().split("T")[0]}
+              />
             </div>
             <div>
               <label htmlFor="gender" className="kc-label">Gender *</label>

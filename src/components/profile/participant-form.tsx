@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Loader2, AlertCircle, CheckCircle2, Plus } from "lucide-react";
 import { cn, calculateAge } from "@/lib/utils";
 import { Gender } from "@prisma/client";
+import { DateOfBirthPicker } from "./date-of-birth-picker";
 
 export interface AgeGroupOption {
   id: string;
@@ -128,13 +129,10 @@ export function ParticipantForm({
           <label htmlFor="pf-dob" className="kc-label">
             Date of birth
           </label>
-          <input
-            id="pf-dob"
-            type="date"
+          <DateOfBirthPicker
             value={dateOfBirth}
-            onChange={(e) => setDateOfBirth(e.target.value)}
-            className="kc-input"
-            max={new Date().toISOString().split("T")[0]}
+            onChange={setDateOfBirth}
+            maxDate={new Date().toISOString().split("T")[0]}
           />
         </div>
         <div>

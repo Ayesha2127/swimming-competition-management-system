@@ -44,7 +44,7 @@ export async function POST(req: Request) {
   });
   if (duplicate) {
     return NextResponse.json(
-      { error: "This KC Membership Number is already registered." },
+      { error: `This KC Membership Number is already linked to "${duplicate.fullName}". If this is a different person, please use a different KC number.` },
       { status: 409 },
     );
   }
